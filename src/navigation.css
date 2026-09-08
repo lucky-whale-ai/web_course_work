@@ -1,0 +1,1 @@
+.nav-dropdown{position:relative}.nav-submenu{display:none;position:absolute;top:100%;left:-16px;padding:20px 16px;background:var(--bg);box-shadow:0 8px 24px #0002;min-width:220px;z-index:20;white-space:normal}.nav-dropdown:hover .nav-submenu,.nav-dropdown:focus-within .nav-submenu{display:grid;gap:16px}.nav-submenu a{line-height:24px}
