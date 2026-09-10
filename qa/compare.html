@@ -1,0 +1,19 @@
+<!doctype html><html lang="ru"><meta charset="utf-8"><title>Наложение эталона Figma</title>
+<style>body{margin:0;background:#dedede;font:14px Arial}header{position:fixed;z-index:5;right:16px;top:16px;background:#fff;padding:12px;box-shadow:0 2px 12px #0004;display:grid;gap:10px}main{position:relative;background:white;width:1440px}iframe{display:block;border:0;width:100%;height:5724px}#reference{position:absolute;inset:0;pointer-events:none;width:100%;opacity:.5}label{display:block}button,input,select{font:inherit}#measure{max-width:340px;white-space:pre-wrap}</style>
+<header><label>Эталон <select id="size"><option>1440</option><option>1920</option><option>768</option><option>320</option></select></label><label>Прозрачность <input id="opacity" type="range" min="0" max="1" step=".05" value=".5"></label><label><input id="difference" type="checkbox"> Разница пикселей</label><label>Секция <select id="section"><option value=".hero">Первый экран</option><option value=".home-activities">Сферы деятельности</option><option value=".home-statistics">Статистика</option><option value=".home-projects">Объекты</option><option value=".home-licenses">Лицензии</option><option value=".site-footer">Подвал</option></select></label><button id="measure-button">Измерить секции</button><output id="measure"></output></header>
+<main><iframe title="Главная страница" src="/?qa=1#/"></iframe><img id="reference" src="/qa/reference-1440.png" alt="Эталон Figma"></main>
+<script type="module">
+const frame=document.querySelector('iframe'),main=document.querySelector('main'),ref=document.querySelector('#reference');
+const panel=document.querySelector('header');
+for(const [title,value] of [['Только сайт','0'],['Только макет','1'],['Наложение 50%','.5']]){const b=document.createElement('button');b.textContent=title;b.onclick=()=>{document.querySelector('#difference').checked=false;ref.style.mixBlendMode='normal';ref.style.opacity=value;document.querySelector('#opacity').value=value;};panel.append(b);}
+const hiddenStyle=document.createElement('style');hiddenStyle.textContent='html{scrollbar-width:none}iframe{pointer-events:none}header{max-width:calc(100vw - 32px)}header[hidden]{display:none}';document.head.append(hiddenStyle);
+const hideButton=document.createElement('button');hideButton.textContent='Скрыть панель (H — вернуть)';panel.prepend(hideButton);
+hideButton.onclick=()=>panel.hidden=true;
+document.addEventListener('keydown',e=>{if(e.code==='KeyH'&&!/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))panel.hidden=!panel.hidden;});
+document.querySelector('#opacity').oninput=e=>ref.style.opacity=e.target.value;
+document.querySelector('#difference').onchange=e=>{ref.style.mixBlendMode=e.target.checked?'difference':'normal';ref.style.opacity=e.target.checked?'1':document.querySelector('#opacity').value;};
+document.querySelector('#size').onchange=e=>{main.style.width=e.target.value+'px';ref.src='/qa/reference-'+e.target.value+'.png';};
+document.querySelector('#section').onchange=e=>window.scrollTo({top:frame.contentDocument.querySelector(e.target.value).offsetTop,behavior:'instant'});
+ref.onload=()=>frame.style.height=ref.naturalHeight+'px';
+document.querySelector('#measure-button').onclick=()=>{document.querySelector('#measure').textContent=JSON.stringify([...frame.contentDocument.querySelectorAll('.hero,.section,.site-footer')].map(n=>({section:n.className,y:n.getBoundingClientRect().y,h:n.getBoundingClientRect().height})),null,2);};
+</script></html>

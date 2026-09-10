@@ -113,7 +113,7 @@ export function createApi(store) {
       }
       if (path === '/requests' && method === 'POST') {
         throttle(`request:${user?.id || ip}`,10);
-        if (!['question','partner'].includes(body.type) || !clean(body.name,120) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean(body.email,254)) || typeof body.message !== 'string' || body.message.trim().length<10 || body.message.length>2000 || !body.consent || (body.type==='partner' && !clean(body.company,120))) fail(422, 'Проверьте имя, email, сообщение и согласие.', 'Check your name, email, message and consent.');
+        if (!['question','partner'].includes(body.type) || !clean(body.name,120) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean(body.email,254)) || typeof body.message !== 'string' || body.message.trim().length<10 || body.message.length>2000 || ![true,'on'].includes(body.consent) || (body.type==='partner' && !clean(body.company,120))) fail(422, 'Проверьте имя, email, сообщение и согласие.', 'Check your name, email, message and consent.');
         const row = {id:crypto.randomUUID(), userId:user?.id || null, name:clean(body.name,120), email:clean(body.email,254), phone:clean(body.phone,30), type:body.type, company:clean(body.company,120), category:categories.has(body.category)?body.category:null, message:clean(body.message), status:'new', createdAt:new Date().toISOString()};
         await store.insert('requests', row);
         return json(row,201);

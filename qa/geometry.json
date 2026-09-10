@@ -1,0 +1,130 @@
+{
+  "320": [
+    {
+      "section": "hero",
+      "y": 0,
+      "h": 732
+    },
+    {
+      "section": "section container home-activities",
+      "y": 812,
+      "h": 1336
+    },
+    {
+      "section": "section container home-statistics",
+      "y": 2228,
+      "h": 1401
+    },
+    {
+      "section": "section container home-projects",
+      "y": 3709,
+      "h": 872
+    },
+    {
+      "section": "section container home-licenses",
+      "y": 4661,
+      "h": 744
+    },
+    {
+      "section": "site-footer",
+      "y": 5485,
+      "h": 1384.197998046875
+    }
+  ],
+  "768": [
+    {
+      "section": "hero",
+      "y": 0,
+      "h": 704
+    },
+    {
+      "section": "section container home-activities",
+      "y": 784,
+      "h": 700
+    },
+    {
+      "section": "section container home-statistics",
+      "y": 1564,
+      "h": 990
+    },
+    {
+      "section": "section container home-projects",
+      "y": 2634,
+      "h": 948
+    },
+    {
+      "section": "section container home-licenses",
+      "y": 3662,
+      "h": 520
+    },
+    {
+      "section": "site-footer",
+      "y": 4262,
+      "h": 1020.1979370117188
+    }
+  ],
+  "1440": [
+    {
+      "section": "hero",
+      "y": 0,
+      "h": 740
+    },
+    {
+      "section": "section container home-activities",
+      "y": 840,
+      "h": 622
+    },
+    {
+      "section": "section container home-statistics",
+      "y": 1562,
+      "h": 868
+    },
+    {
+      "section": "section container home-projects",
+      "y": 2530,
+      "h": 1714
+    },
+    {
+      "section": "section container home-licenses",
+      "y": 4344,
+      "h": 496
+    },
+    {
+      "section": "site-footer",
+      "y": 4940,
+      "h": 784
+    }
+  ],
+  "1920": [
+    {
+      "section": "hero",
+      "y": 0,
+      "h": 740
+    },
+    {
+      "section": "section container home-activities",
+      "y": 840,
+      "h": 803
+    },
+    {
+      "section": "section container home-statistics",
+      "y": 1743,
+      "h": 868
+    },
+    {
+      "section": "section container home-projects",
+      "y": 2711,
+      "h": 1602
+    },
+    {
+      "section": "section container home-licenses",
+      "y": 4413,
+      "h": 496
+    },
+    {
+      "section": "site-footer",
+      "y": 5009,
+      "h": 784
+    }
+  ]
+}
