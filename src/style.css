@@ -88,6 +88,8 @@ dialog{padding:0;border:0;background:var(--bg);color:var(--ink);width:min(760px,
 
 .mobile-controls .icon{width:28px;height:28px}
 .content-page h2{overflow-wrap:anywhere}
+.form-page h1{overflow-wrap:anywhere}
+@media(max-width:599px){.agreement-page h1{font-size:30px;line-height:36px}}
 .service-row>*{min-width:0}
 @media(min-width:600px) and (max-width:1023px){.service-row:nth-child(2) h2{font-size:28px;line-height:36px}}
 @media(max-width:599px){.service-row:nth-child(2) h2{font-size:24px;line-height:32px}}
