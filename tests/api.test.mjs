@@ -8,6 +8,40 @@ import {
   generatePassword,
 } from "../js/validation.js";
 import passwords2023 from "../js/common-passwords.js";
+import { readFile } from "node:fs/promises";
+import { localizedText } from "../js/i18n.js";
+
+test("catalogue searches Belarusian titles and regions and sorts translated titles", async () => {
+  const seed = JSON.parse(
+    await readFile(new URL("../data/seed.json", import.meta.url), "utf8"),
+  );
+  const call = client(createApi(memory({ projects: seed.projects })));
+  const found = await call(
+    "/projects?lang=be&q=" + encodeURIComponent("вучэбны") + "&sort=title",
+  );
+  assert.equal(found.status, 200);
+  assert.equal(found.data.total, 24);
+  const expected = seed.projects
+    .filter((p) => localizedText(p, "title", "be").includes("вучэбны"))
+    .sort((a, b) =>
+      localizedText(a, "title", "be").localeCompare(
+        localizedText(b, "title", "be"),
+        "be",
+      ),
+    );
+  assert.deepEqual(
+    found.data.items.map((p) => p.id),
+    expected.slice(0, 6).map((p) => p.id),
+  );
+  const region = await call(
+    "/projects?lang=be&q=" +
+      encodeURIComponent("Самарская вобласць") +
+      "&category=oil",
+  );
+  assert.equal(region.data.total, 7);
+  const detail = await call("/projects/" + found.data.items[0].id);
+  assert.match(localizedText(detail.data, "title", "be"), /вучэбны аб’ект/);
+});
 
 const valid = {
   firstName: "Иван",

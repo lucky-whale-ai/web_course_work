@@ -158,8 +158,8 @@ export function registrationErrors(
     typeof v.password !== "string" ||
     p.length < 8 ||
     p.length > 20 ||
-    !/[A-ZА-ЯЁ]/.test(p) ||
-    !/[a-zа-яё]/.test(p) ||
+    !/[A-ZА-ЯЁІЎ]/.test(p) ||
+    !/[a-zа-яёіў]/.test(p) ||
     !/[0-9]/.test(p) ||
     !/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>/?`~]/.test(p) ||
     /\s/.test(p)

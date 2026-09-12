@@ -1,4 +1,10 @@
 import { navigation, categories, licenses, regions } from "./content.js";
+import {
+  translate,
+  localizedText,
+  languageInfo,
+  nextLanguage,
+} from "./i18n.js";
 export const escapeHTML = (value) =>
   String(value ?? "").replace(
     /[&<>"']/g,
@@ -22,9 +28,10 @@ try {
     ...JSON.parse(localStorage.getItem("roof.preferences") || "{}"),
   };
 } catch {}
-export const tr = (ru, en) => (preferences.language === "en" ? en : ru);
+preferences.language = languageInfo(preferences.language).code;
+export const tr = (ru, en, be) => translate(ru, en, preferences.language, be);
 export const textOf = (o, k = "title") =>
-  o[preferences.language === "en" ? `${k}En` : k] || o[k] || "";
+  localizedText(o, k, preferences.language);
 export const asset = (name) => `/assets/${name}`;
 export function image(path, alt, cls = "", attrs = "") {
   return `<img src="${escapeHTML(path.startsWith("assets/") ? "/" + path : asset(path))}" alt="${escapeHTML(alt)}" class="${cls}" ${attrs}><span class="image-description">${escapeHTML(alt)}</span>`;
@@ -69,7 +76,7 @@ export function footer(home = false) {
     )
     .join(
       "",
-    )}</ul></div><div class="footer-actions"><button data-request="partner">${icon("imgVuesaxLinearArrowRight.svg")}${tr("Предложить партнерство", "Propose a partnership")}</button><button data-request="question">${icon("imgVuesaxLinearArrowRight.svg")}${tr("Задать вопрос", "Ask a question")}</button></div></div></div><div class="footer-bottom"><p>${tr("© 2022. ООО «Руф Профи»", "© 2022. Roof Profi LLC")}</p>${routeLink("agreement", "Политика конфиденциальности", "Privacy policy")}<p>${tr("Разработка сайта Varnoff Studio", "Website design by Varnoff Studio")}</p></div></div>${home ? "" : `<div class="utility-bar"><nav>${routeLink("account", "Личный кабинет", "My account")}${routeLink("settings", "Настройки сайта", "Site settings")}</nav><button data-action="language">${preferences.language === "ru" ? "English" : "Русский"}</button></div>`}</footer>`;
+    )}</ul></div><div class="footer-actions"><button data-request="partner">${icon("imgVuesaxLinearArrowRight.svg")}${tr("Предложить партнерство", "Propose a partnership")}</button><button data-request="question">${icon("imgVuesaxLinearArrowRight.svg")}${tr("Задать вопрос", "Ask a question")}</button></div></div></div><div class="footer-bottom"><p>${tr("© 2022. ООО «Руф Профи»", "© 2022. Roof Profi LLC")}</p>${routeLink("agreement", "Политика конфиденциальности", "Privacy policy")}<p>${tr("Разработка сайта Varnoff Studio", "Website design by Varnoff Studio")}</p></div></div>${home ? "" : `<div class="utility-bar"><nav>${routeLink("account", "Личный кабинет", "My account")}${routeLink("settings", "Настройки сайта", "Site settings")}</nav><button data-action="language">${nextLanguage(preferences.language).name}</button></div>`}</footer>`;
 }
 export function innerHero(ru, en, name = "45-3130-imgInnerHeadDesktop.png") {
   return `${header()}<div class="inner-hero">${image(name, "", "", 'fetchpriority="high"')}<h1>${tr(ru, en)}</h1></div><nav class="breadcrumbs" aria-label="${tr("Хлебные крошки", "Breadcrumbs")}">${routeLink("", "Главная", "Home")}<span aria-hidden="true">/</span><span>${tr(ru, en)}</span></nav>`;

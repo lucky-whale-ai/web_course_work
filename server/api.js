@@ -1,3 +1,4 @@
+import { localizedText, languageInfo } from "../js/i18n.js";
 import { registrationErrors, normalizePhone } from "../js/validation.js";
 import { token, digest, hashPassword, verifyPassword } from "./security.js";
 
@@ -187,15 +188,18 @@ export function createApi(store) {
               p.locationEn,
               p.client,
               p.clientEn,
+              localizedText(p, "title", "be"),
+              localizedText(p, "location", "be"),
+              localizedText(p, "client", "be"),
             ].some((v) => v?.toLocaleLowerCase().includes(q)),
           );
         const sort = url.searchParams.get("sort"),
-          lang = url.searchParams.get("lang") === "en" ? "en" : "ru";
+          lang = languageInfo(url.searchParams.get("lang")).code;
         rows.sort(
           sort === "title"
             ? (a, b) =>
-                (lang === "en" ? a.titleEn : a.title).localeCompare(
-                  lang === "en" ? b.titleEn : b.title,
+                localizedText(a, "title", lang).localeCompare(
+                  localizedText(b, "title", lang),
                   lang,
                 )
             : sort === "oldest"

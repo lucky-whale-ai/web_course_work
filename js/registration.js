@@ -26,6 +26,7 @@ export function setupRegistration(onSuccess, errorText) {
     document.querySelector("#nickname-attempts").textContent = tr(
       `Попытка ${attempts} из 5${attempts === 5 ? ". Теперь можно ввести свой никнейм." : ""}`,
       `Attempt ${attempts} of 5${attempts === 5 ? ". You can now enter your own nickname." : ""}`,
+      `Спроба ${attempts} з 5${attempts === 5 ? ". Цяпер можна ўвесці свой нікнейм." : ""}`,
     );
     if (attempts === 5) {
       nick.readOnly = false;

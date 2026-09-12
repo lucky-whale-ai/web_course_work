@@ -1,3 +1,4 @@
+import { languageInfo, nextLanguage } from "./i18n.js";
 import * as pages from "./pages.js";
 import { categories, homeProjects, licenses } from "./content.js";
 import {
@@ -203,7 +204,7 @@ async function syncFavorites() {
   } catch {}
 }
 function requestCard(r, admin = false) {
-  return `<article class="request-card"><div class="request-meta"><span>${tr(r.type === "partner" ? "Партнёрство" : "Вопрос", r.type === "partner" ? "Partnership" : "Question")} · ${new Date(r.createdAt).toLocaleDateString(preferences.language === "ru" ? "ru-RU" : "en-GB")}</span><span class="status">${statusLabel(r.status)}</span></div><h3>${esc(r.name)}</h3>${admin ? `<p>${esc(r.email)} · ${esc(r.phone || "")}</p>` : ""}<p>${esc(r.message)}</p>${r.company ? `<p>${tr("Компания:", "Company:")} ${esc(r.company)}</p>` : ""}${admin ? `<label class="field"><span>${tr("Изменить статус", "Update status")}</span><select data-request-status="${r.id}">${["new", "processing", "done"].map((s) => `<option value="${s}" ${s === r.status ? "selected" : ""}>${statusLabel(s)}</option>`).join("")}</select></label>` : ""}</article>`;
+  return `<article class="request-card"><div class="request-meta"><span>${tr(r.type === "partner" ? "Партнёрство" : "Вопрос", r.type === "partner" ? "Partnership" : "Question")} · ${new Date(r.createdAt).toLocaleDateString(languageInfo(preferences.language).locale)}</span><span class="status">${statusLabel(r.status)}</span></div><h3>${esc(r.name)}</h3>${admin ? `<p>${esc(r.email)} · ${esc(r.phone || "")}</p>` : ""}<p>${esc(r.message)}</p>${r.company ? `<p>${tr("Компания:", "Company:")} ${esc(r.company)}</p>` : ""}${admin ? `<label class="field"><span>${tr("Изменить статус", "Update status")}</span><select data-request-status="${r.id}">${["new", "processing", "done"].map((s) => `<option value="${s}" ${s === r.status ? "selected" : ""}>${statusLabel(s)}</option>`).join("")}</select></label>` : ""}</article>`;
 }
 async function loadAccount(version) {
   try {
@@ -403,7 +404,7 @@ document.addEventListener("click", async (e) => {
       closeModal();
       break;
     case "language":
-      setPreferences({ language: preferences.language === "ru" ? "en" : "ru" });
+      setPreferences({ language: nextLanguage(preferences.language).code });
       render({ keepScroll: true });
       break;
     case "reset-settings":
